@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sweet Tooth Recipes</title>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <nav>
+        <%= link_to "Home", @user %> <%= link_to "Your Pantry", pantry_path(@user.pantry) %> <%= link_to "New Recipe", new_recipe_path%> [Current User: <%=@user.username%>] 
+        <% if @user.email != "facebook_user" %>
+          <%= link_to "Edit Your Account", edit_user_path(@user) %>
+        <% end %>
+        <%= link_to "Logout", signout_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </nav>
+    
+    <p id="notice"><%= notice %></p>
+
+    <%= yield %>
+  </body>
+</html>

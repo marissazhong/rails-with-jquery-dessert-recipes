@@ -1,0 +1,34 @@
+<h1><%=@recipe.name%></h1>
+
+<% if @recipe.user_id == @user.id %>
+    <div class="actions">
+        <%= button_to "Edit Recipe", edit_recipe_path(@recipe), :method=>:get %><br />
+        <%= button_to "Delete Recipe", recipe_path(@recipe), :method=>:delete, data: {confirm: "Are you sure?"} %>
+    </div>
+<% else %>
+    <h2>Author: <%=@recipe.user.username%></h2>
+<% end %>
+
+<h3>Prep Time: <%=@recipe.prep_time%> minutes</h3>
+<h3>Cook Time: <%=@recipe.cook_time%> minutes</h3>
+
+<h2>Ingredients:</h2>
+
+<table id="ingredients-table">
+    <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    </tr>
+    <% @recipe.ingredients_recipes.each do |ingredient| %>
+        <tr>
+            <td><%= ingredient["input_name"].titleize %></td>
+            <td><%= ingredient["quantity"] %></td>
+        </tr>
+    <% end %>
+</table>
+    
+<h2>Directions:</h2>
+
+<ol><% @recipe.directions.scan(/"([^"]*)"/).each do |direction| %>
+    <li><%= direction[0] %></li>
+<% end %></ol>

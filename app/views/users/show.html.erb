@@ -1,0 +1,11 @@
+<h3>Welcome, <%=@user.username%>!</h3><br>
+
+<h3>Recipe Index:</h3>
+
+<%= render partial: 'recipes/index', locals: {all_recipes: @recipes} %>  
+
+<br></br>
+
+<h3>Your Recipes:</h3>
+
+<%= render partial: 'recipes/index', locals: {all_recipes: @user.recipes} %>  

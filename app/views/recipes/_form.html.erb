@@ -1,0 +1,90 @@
+<%= form_for(@recipe) do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:
+      </h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, "Name:"%><br>
+      <%= f.text_field :name, class: "form-control" %>
+    </div><br>
+
+    <div class="form-group">
+      <%= f.label :prep_time, "Prep Time (in minutes):" %><br>
+      <%= f.text_field :prep_time, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :cook_time, "Cook Time (in minutes):" %><br>
+      <%= f.text_field :cook_time, class: "form-control" %>
+    </div><br>
+
+    <table id="ingredients-table">
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+      </tr>
+      <%= f.fields_for :ingredients_recipes do |ingred| %>
+        <tr>
+          <td><%= ingred.text_field :input_name %></td>
+          <td><%= ingred.text_field :quantity %></td>
+        </tr>
+      <% end %>
+    </table>
+    <tr><button type="button" id="add-ingredient">Add Ingredient</button></tr>
+
+    <br></br>
+
+    <table id="directions-table">
+      <tr>
+        <th>Direction</th>
+      </tr>
+      <tr>
+        <%= f.fields_for :directions do |direct| %>
+          <td>1. <%= direct.text_field "0" %></td>
+        <% end %>
+      </tr>
+    </table>
+    <tr><button type="button" id="add-direction">Add Direction</button></tr>
+
+    <br></br>
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        let i = 1;
+        let j = 1;
+        $("#add-ingredient").click(function(){
+          $("#ingredients-table").append('\
+            <tr> \
+              <td><input type="text" name="recipe[ingredients_recipes_attributes]['+i+'][input_name]"</td> \
+              <td><input type="text" name="recipe[ingredients_recipes_attributes]['+i+'][quantity]"</td> \
+            </tr><br> \
+          ');
+          i++;
+        });
+        $("#add-direction").click(function(){
+          $("#directions-table").append('\
+            <tr> \
+              <td>'+(j+1)+'. <input type="textarea" name="recipe[directions]['+j+']"</td> \
+            </tr> \
+          ');
+          j++;
+        });
+      });
+    </script>
+<% end %>
