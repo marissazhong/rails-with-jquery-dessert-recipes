@@ -12,6 +12,10 @@ class RecipesController < ApplicationController
 
     # shows individual recipe
     def show
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @recipe }
+        end
     end
 
     # shows new recipe form
