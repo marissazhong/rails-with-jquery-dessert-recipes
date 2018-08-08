@@ -26,6 +26,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2', '~> 0.2.1'
 gem 'dotenv-rails'
 gem 'pry'
+gem 'active_model_serializers'
+
 # bootstrap
 gem 'bootstrap-sass', '3.3.7'
 
