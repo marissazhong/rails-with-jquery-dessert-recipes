@@ -113,10 +113,16 @@ $(function () {
           $("#recipeAuthor").text(`Author: ${recipe["user"]["username"]}`);
           $("#recipePrepTime").text(`Prep Time: ${recipe["prep_time"]}`);
           $("#recipeCookTime").text(`Cook Time: ${recipe["cook_time"]}`);
+          var recipe_ingredients = '<table id="ingredients-table"><tr><th>Name</th><th>Amount</th></tr>';
+          if (recipe["ingredients"].length > 0) {
+            recipe["ingredients"].forEach(function(ingredient) {
+              recipe_ingredients += '<tr><td>' + ingredient["input_name"].titleize + '</td><td>' + ingredient["quantity"] + '</td></tr>';
+            });
+          }
+          recipe_ingredients += '</table>'
+          $("#recipeIngredients").html(recipe_ingredients);
 
-          $("#recipeIngredients").html(`Cook Time: ${recipe["cook_time"]}`);
-
-          $("#recipeDirections").html(`Cook Time: ${recipe["cook_time"]}`);
+          $("#recipeDirections").html(`Cook Time: ${recipe["directions"][0]}`);
         });
     });
 });
