@@ -15,15 +15,11 @@
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $(".js-recipe-more-info").on("click", function() {
-        var id = $(this).data("id");
+        let id = $(this).data("id");
         $.get("/recipes/" + id + ".json", function(data) {
             var recipe_info = "<p>Author: " + data["user"]["username"] + "<br />Prep Time: " + data["prep_time"] + " minutes <br />Cook Time: " + data["cook_time"] + " minutes</p>";
             $("#show-recipe-" + id).html(recipe_info);
         });
-    });
-    $(".js-recipe-less-info").on("click", function() {
-        var clear_info = ""
-        $("#show-recipe-" + id).html(clear_info);
     });
 });
 </script>

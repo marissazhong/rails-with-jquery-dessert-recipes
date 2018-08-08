@@ -103,10 +103,10 @@
 $(function () {
     $('form').submit(function(event) {
         event.preventDefault();
-        var values = $(this).serialize();
-        var posting = $.post('/recipes', values);
+        let values = $(this).serialize();
+        let posting = $.post('/recipes', values);
         posting.done(function(data) {
-          var new_recipe = new ShowRecipe(data);
+          let new_recipe = new ShowRecipe(data);
           $("#recipeName").html(`<p>Your new recipe has been created:</p><h2><a href="/recipes/${new_recipe.id}">${new_recipe.name}</a></h2>`);
           $("#recipeAuthor").text(`Author: ${new_recipe.author}`);
           $("#recipePrepTime").text(`Prep Time: ${new_recipe.prep_time}`);

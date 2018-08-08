@@ -16,9 +16,9 @@
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $(".js-user-recipes").on("click", function() {
-        var id = $(this).data("id");
+        let id = $(this).data("id");
         $.get("/users/" + id + ".json", function(data) {
-            var user_recipes = "";
+            let user_recipes = "";
             if (data["recipes"].length > 0) {
                 data["recipes"].forEach(function(recipe) {
                     user_recipes += '<li><a href="/recipes/' + recipe["id"] + '">' + recipe["name"] + '</a></li><br />';
