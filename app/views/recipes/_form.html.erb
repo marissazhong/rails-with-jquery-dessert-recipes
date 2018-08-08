@@ -104,25 +104,29 @@ $(function () {
     $('form').submit(function(event) {
         event.preventDefault();
         var values = $(this).serialize();
-        console.log(values);
         var posting = $.post('/recipes', values);
         posting.done(function(data) {
           var recipe = data;
-          console.log(recipe);
           $("#recipeName").html(`<p>Your new recipe has been created:</p><h2><a href="/recipes/${recipe["id"]}">${recipe["name"]}</a></h2>`);
           $("#recipeAuthor").text(`Author: ${recipe["user"]["username"]}`);
           $("#recipePrepTime").text(`Prep Time: ${recipe["prep_time"]}`);
           $("#recipeCookTime").text(`Cook Time: ${recipe["cook_time"]}`);
-          var recipe_ingredients = '<table id="ingredients-table"><tr><th>Name</th><th>Amount</th></tr>';
-          if (recipe["ingredients"].length > 0) {
-            recipe["ingredients"].forEach(function(ingredient) {
-              recipe_ingredients += '<tr><td>' + ingredient["input_name"].titleize + '</td><td>' + ingredient["quantity"] + '</td></tr>';
-            });
-          }
-          recipe_ingredients += '</table>'
+          var recipe_ingredients = '<h2>Ingredients:</h2><table id="ingredients-table"><tr><th>Name</th><th>Amount</th></tr>';
+          var mid = recipe["ingredients_recipes"].length/2;
+          recipe["ingredients_recipes"].slice(0,mid).forEach(function(ingredient) {
+            ingredient_name = ingredient["input_name"].charAt(0).toUpperCase() + ingredient["input_name"].slice(1);
+            recipe_ingredients += '<tr><td>' + ingredient_name + '</td><td>' + ingredient["quantity"] + '</td></tr>';
+          });
+          recipe_ingredients += '</table>';
           $("#recipeIngredients").html(recipe_ingredients);
-
-          $("#recipeDirections").html(`Cook Time: ${recipe["directions"][0]}`);
+          console.log(recipe);
+          var recipe_directions = '<h2>Directions:</h2>';
+          var i = 1;
+          recipe["directions"].match(/".*?"/g).forEach(function(direction) {
+            recipe_directions += i + '. ' + direction.slice(1,-1) + '<br />';
+            i++;
+          })
+          $("#recipeDirections").html(recipe_directions);
         });
     });
 });
