@@ -1,4 +1,4 @@
-# Rails Sweet Tooth Dessert Recipes App
+# Rails/Jquery Sweet Tooth Dessert Recipes App
 
 ## Overview
 
@@ -10,7 +10,7 @@ To run this on your local machine, run `bundle install` to install the gems requ
 
 
 ## Contributing
-Bug reports and pull requests are welcome on GitHub at https://github.com/marissazhong/rails-dessert-recipes. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/marissazhong/rails-with-jquery-dessert-recipes. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
 ## License
 The gem is available as open source under the terms of the MIT License.
