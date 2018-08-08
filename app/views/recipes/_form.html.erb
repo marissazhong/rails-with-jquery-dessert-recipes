@@ -106,27 +106,13 @@ $(function () {
         var values = $(this).serialize();
         var posting = $.post('/recipes', values);
         posting.done(function(data) {
-          var recipe = data;
-          $("#recipeName").html(`<p>Your new recipe has been created:</p><h2><a href="/recipes/${recipe["id"]}">${recipe["name"]}</a></h2>`);
-          $("#recipeAuthor").text(`Author: ${recipe["user"]["username"]}`);
-          $("#recipePrepTime").text(`Prep Time: ${recipe["prep_time"]}`);
-          $("#recipeCookTime").text(`Cook Time: ${recipe["cook_time"]}`);
-          var recipe_ingredients = '<h2>Ingredients:</h2><table id="ingredients-table"><tr><th>Name</th><th>Amount</th></tr>';
-          var mid = recipe["ingredients_recipes"].length/2;
-          recipe["ingredients_recipes"].slice(0,mid).forEach(function(ingredient) {
-            ingredient_name = ingredient["input_name"].charAt(0).toUpperCase() + ingredient["input_name"].slice(1);
-            recipe_ingredients += '<tr><td>' + ingredient_name + '</td><td>' + ingredient["quantity"] + '</td></tr>';
-          });
-          recipe_ingredients += '</table>';
-          $("#recipeIngredients").html(recipe_ingredients);
-          console.log(recipe);
-          var recipe_directions = '<h2>Directions:</h2>';
-          var i = 1;
-          recipe["directions"].match(/".*?"/g).forEach(function(direction) {
-            recipe_directions += i + '. ' + direction.slice(1,-1) + '<br />';
-            i++;
-          })
-          $("#recipeDirections").html(recipe_directions);
+          var new_recipe = new ShowRecipe(data);
+          $("#recipeName").html(`<p>Your new recipe has been created:</p><h2><a href="/recipes/${new_recipe.id}">${new_recipe.name}</a></h2>`);
+          $("#recipeAuthor").text(`Author: ${new_recipe.author}`);
+          $("#recipePrepTime").text(`Prep Time: ${new_recipe.prep_time}`);
+          $("#recipeCookTime").text(`Cook Time: ${new_recipe.cook_time}`);
+          $("#recipeIngredients").html(new_recipe.showIngredients());
+          $("#recipeDirections").html(new_recipe.showDirections());
         });
     });
 });
