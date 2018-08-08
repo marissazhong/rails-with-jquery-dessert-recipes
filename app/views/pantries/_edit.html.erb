@@ -1,9 +1,7 @@
-<h3>Add Ingredients to Your Pantry:</h3><br>
-
 <%= form_for(@pantry) do |f| %>
     <div class="form-group">
         <%= f.collection_check_boxes :ingredient_ids, Ingredient.all, :id, :titleize do |b| %>
-            <%= b.label { b.check_box(checked: false) } + b.text %>
+            <%= b.label { b.check_box(checked: false) } + b.text %><br />
         <% end %>
     </div><br>
 
@@ -26,7 +24,6 @@
         <%= f.submit%>
     </div>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
         let i = 1;

@@ -1,3 +1,5 @@
+<div class='box'>
+<h1>New Recipe</h1>
 <%= form_for(@recipe) do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
@@ -61,7 +63,17 @@
     <div class="actions">
       <%= f.submit class: "btn btn-primary" %>
     </div>
-
+</div>
+<div class="box">
+    <div id="newRecipe">
+      <div id="recipeName"></div>
+      <h2 id="recipeAuthor"></h2>
+      <h3 id="recipePrepTime"></h3>
+      <h3 id="recipeCookTime"></h3>
+      <div id="recipeIngredients"></div>
+      <div id="recipeDirections"></div>
+    </div>
+</div>
     <script>
       $(document).ready(function(){
         let i = 1;
@@ -86,3 +98,26 @@
       });
     </script>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+    $('form').submit(function(event) {
+        event.preventDefault();
+        var values = $(this).serialize();
+        console.log(values);
+        var posting = $.post('/recipes', values);
+        posting.done(function(data) {
+          var recipe = data;
+          console.log(recipe);
+          $("#recipeName").html(`<p>Your new recipe has been created:</p><h2><a href="/recipes/${recipe["id"]}">${recipe["name"]}</a></h2>`);
+          $("#recipeAuthor").text(`Author: ${recipe["user"]["username"]}`);
+          $("#recipePrepTime").text(`Prep Time: ${recipe["prep_time"]}`);
+          $("#recipeCookTime").text(`Cook Time: ${recipe["cook_time"]}`);
+
+          $("#recipeIngredients").html(`Cook Time: ${recipe["cook_time"]}`);
+
+          $("#recipeDirections").html(`Cook Time: ${recipe["cook_time"]}`);
+        });
+    });
+});
+</script>

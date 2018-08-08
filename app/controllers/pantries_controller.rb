@@ -7,6 +7,10 @@ class PantriesController < ApplicationController
     # shows recipes for which pantry includes all ingredients
     def show
         @recipes = Recipe.all_by_pantry(@pantry.id)
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @pantry }
+        end
     end
 
     # shows edit pantry form

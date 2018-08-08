@@ -2,21 +2,22 @@
 
 <h3>Recipe Index:</h3>
 
-<%= render partial: 'recipes/index', locals: {all_recipes: @recipes, current_user: @user} %>  
+<div class='box'>
+    <%= render partial: 'recipes/index', locals: {all_recipes: @recipes, current_user: @user} %>  
 
-<br></br>
+    <br></br>
 
-<button class="js-user-recipes" data-id="<%= @user.id %>">Show Your Recipes</button><br />
+    <button class="js-user-recipes" data-id="<%= @user.id %>">Show Your Recipes</button><br />
 
-<ul id="show-user-recipes">
-</ul>
+    <ul id="show-user-recipes">
+    </ul>
+</div>
 
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $(".js-user-recipes").on("click", function() {
         var id = $(this).data("id");
         $.get("/users/" + id + ".json", function(data) {
-            console.log(data);
             var user_recipes = "";
             if (data["recipes"].length > 0) {
                 data["recipes"].forEach(function(recipe) {

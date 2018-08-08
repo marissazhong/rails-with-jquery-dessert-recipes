@@ -29,7 +29,8 @@ class RecipesController < ApplicationController
         @recipe = @user.recipes.build(recipe_params)
         @recipe.directions = params[:recipe][:directions].values.delete_if {|v| v.empty?}
         if @recipe.save
-            redirect_to recipe_path(@recipe)
+            #redirect_to recipe_path(@recipe)
+            render json: @recipe, status: 201
         else
             render :new
         end

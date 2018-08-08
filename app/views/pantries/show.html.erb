@@ -9,11 +9,10 @@
     <p>Your pantry is currently empty.</p>
 <% end %>
 
-<br>
+<br />
 
-<div class="actions">
-    <%= button_to "Add To Your Pantry", edit_pantry_path(@pantry), :method=>:get %><br />
-</div>
+<h3>Edit Your Pantry:</h3><br>
+<%= render 'edit' %>
 
 <h3>You have enough in the pantry to make these recipes:</h3><br>
 
@@ -22,6 +21,6 @@
         <%= link_to recipe.name, recipe_path(recipe) %><br>
     <% end %>
 <% else %>
-    <p>Oops! There is not enough in the pantry to make our recipes.<br>
+    <p>Oops! There is not enough in the pantry to make our recipes.<br />
     <%= link_to "Add To Your Pantry", edit_pantry_path(@pantry), :method=>:get %> or <%= link_to "Create New Recipe", new_recipe_path%></p>
 <% end %>
