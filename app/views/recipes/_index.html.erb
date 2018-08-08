@@ -21,5 +21,9 @@ $(function() {
             $("#show-recipe-" + id).html(recipe_info);
         });
     });
+    $(".js-recipe-less-info").on("click", function() {
+        var clear_info = ""
+        $("#show-recipe-" + id).html(clear_info);
+    });
 });
 </script>

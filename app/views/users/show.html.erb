@@ -2,10 +2,31 @@
 
 <h3>Recipe Index:</h3>
 
-<%= render partial: 'recipes/index', locals: {all_recipes: @recipes} %>  
+<%= render partial: 'recipes/index', locals: {all_recipes: @recipes, current_user: @user} %>  
 
 <br></br>
 
-<h3>Your Recipes:</h3>
+<button class="js-user-recipes" data-id="<%= @user.id %>">Show Your Recipes</button><br />
 
-<%= render partial: 'recipes/index', locals: {all_recipes: @user.recipes} %>  
+<ul id="show-user-recipes">
+</ul>
+
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $(".js-user-recipes").on("click", function() {
+        var id = $(this).data("id");
+        $.get("/users/" + id + ".json", function(data) {
+            console.log(data);
+            var user_recipes = "";
+            if (data["recipes"].length > 0) {
+                data["recipes"].forEach(function(recipe) {
+                    user_recipes += '<a href="/recipes/' + recipe["id"] + '">' + recipe["name"] + '</a></li><br />';
+                })
+            } else {
+                user_recipes = "You have no recipes."
+            }
+            $("#show-user-recipes").html(user_recipes);
+        });
+    });
+});
+</script>

@@ -39,6 +39,10 @@ class UsersController < ApplicationController
     
     # shows user homepage
     def show
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @user }
+        end
     end
 
     # shows edit user credentials page
