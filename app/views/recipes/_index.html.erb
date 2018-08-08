@@ -1,8 +1,11 @@
 
 <% if all_recipes != [] %>
     <% all_recipes.each do |recipe| %>
-        <%= link_to recipe.name, recipe_path(recipe) %>
-        <button class="js-recipe" data-id="<%= recipe.id %>">Show Recipe</button><br />
+            <%= link_to recipe.name, recipe_path(recipe) %>
+            <div id='show-recipe-<%= recipe.id %>'>
+                <button class="js-recipe-more-info" data-id="<%= recipe.id %>">More Info</button><br />
+            </div>
+            <br />
     <% end %>
 <% else %>
     There are no recipes here yet. <%= link_to "Create one now!", new_recipe_path %>
@@ -11,10 +14,11 @@
 
 <script type="text/javascript" charset="utf-8">
 $(function() {
-    $(".js-user-recipes").on("click", function() {
+    $(".js-recipe-more-info").on("click", function() {
         var id = $(this).data("id");
         $.get("/recipes/" + id + ".json", function(data) {
-            
+            var recipe_info = "<p>Author: " + data + "<br />Prep Time: " + data["prep_time"] + " minutes <br />Cook Time: " + data["cook_time"] + " minutes</p>";
+            $("#show-recipe-" + id).html(recipe_info);
         });
     });
 });
