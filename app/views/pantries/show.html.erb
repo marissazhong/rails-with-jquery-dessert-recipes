@@ -1,26 +1,29 @@
-<h3>Your Pantry:</h3><br>
+<div class='box'>
+    <h3>Your Pantry:</h3><br>
 
-<% if !@pantry.ingredients.empty? %>
-    <% @pantry.ingredients.each do |ingredient| %>
-            <%= ingredient.name.titleize %>
-            <%= link_to "Remove", pantry_path(@pantry, :ingredient_id=>ingredient.id), :method=>:delete %><br>
+    <% if !@pantry.ingredients.empty? %>
+        <% @pantry.ingredients.each do |ingredient| %>
+                <%= ingredient.name.titleize %>
+                <%= link_to "Remove", pantry_path(@pantry, :ingredient_id=>ingredient.id), :method=>:delete %><br>
+        <% end %>
+    <% else %>
+        <p>Your pantry is currently empty.</p>
     <% end %>
-<% else %>
-    <p>Your pantry is currently empty.</p>
-<% end %>
 
-<br />
+    <br />
+</div>
+<div class='box'>
+    <h3>Edit Your Pantry:</h3><br>
+    <%= render 'edit' %>
 
-<h3>Edit Your Pantry:</h3><br>
-<%= render 'edit' %>
+    <h3>You have enough in the pantry to make these recipes:</h3><br>
 
-<h3>You have enough in the pantry to make these recipes:</h3><br>
-
-<% if !@recipes.empty? %>
-    <% @recipes.each do |recipe| %>
-        <%= link_to recipe.name, recipe_path(recipe) %><br>
+    <% if !@recipes.empty? %>
+        <% @recipes.each do |recipe| %>
+            <%= link_to recipe.name, recipe_path(recipe) %><br>
+        <% end %>
+    <% else %>
+        <p>Oops! There is not enough in the pantry to make our recipes.<br />
+        <%= link_to "Add To Your Pantry", edit_pantry_path(@pantry), :method=>:get %> or <%= link_to "Create New Recipe", new_recipe_path%></p>
     <% end %>
-<% else %>
-    <p>Oops! There is not enough in the pantry to make our recipes.<br />
-    <%= link_to "Add To Your Pantry", edit_pantry_path(@pantry), :method=>:get %> or <%= link_to "Create New Recipe", new_recipe_path%></p>
-<% end %>
+</div>
