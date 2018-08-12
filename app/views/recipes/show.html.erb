@@ -32,3 +32,37 @@
 <ol><% @recipe.directions.scan(/"([^"]*)"/).each do |direction| %>
     <li><%= direction[0] %></li>
 <% end %></ol>
+
+<div id="next-recipe">
+</div>
+
+<button class="js-next-recipe" data-id="<%= @recipe.id %>">Next Recipe</button><br />
+
+<script type="text/javascript" charset="utf-8">
+var id = 0;
+$(function() {
+    $(".js-next-recipe").on("click", function() {
+        if (id === 0) {
+            id += $(this).data("id");
+        } else {
+            id ++;
+        }
+        let next_recipe = "Next Recipe: <br />";
+        let next_recipe_directions;
+        $.get("/recipes/" + id + ".json", function(data) {
+            next_recipe += "<h1>" + data["name"] + "</h1><h2>Author: " + data["user"]["username"] + "</h2><h3>Prep Time: " + data["prep_time"] + " minutes</h3><h3>Cook Time: " + data["cook_time"] + " minutes</h3>"
+            next_recipe += "<h2>Ingredients:</h2><table id='ingredients-table'><tr><th>Name</th><th>Amount</th></tr>"
+            data["ingredients_recipes"].forEach(function(ingredient) {
+                next_recipe += '<tr><td>' + ingredient["input_name"] + '</td><td>' + ingredient["quantity"] + '</td></tr>';
+            })
+            next_recipe_directions += "<h2>Directions:</h2><ol>"
+            data["directions"].match(/"([^"]*)"/g).forEach(function(direction) {
+                next_recipe_directions += "<li>" + direction.substring(1,direction.length-1) + "</li>";
+            })
+            next_recipe_directions += "</ol>"
+            $("#next-recipe").append(next_recipe);
+            $("#next-recipe").append(next_recipe_directions);
+        });
+    });
+});
+</script>
