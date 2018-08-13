@@ -9,6 +9,8 @@
 
     <button class="js-user-recipes" data-id="<%= @user.id %>">Show Your Recipes</button><br />
 
+    <button class="js-sort-recipes" data-id="<%= @user.id %>">Sort Recipes</button><br />
+
     <ul id="show-user-recipes">
     </ul>
 </div>
@@ -18,7 +20,6 @@ $(function() {
     $(".js-user-recipes").on("click", function() {
         let id = $(this).data("id");
         $.get("/users/" + id + ".json", function(data) {
-            console.log(data);
             let user_recipes = "";
             if (data["recipes"].length > 0) {
                 data["recipes"].forEach(function(recipe) {
@@ -28,6 +29,26 @@ $(function() {
                 user_recipes = "You have no recipes."
             }
             $("#show-user-recipes").html(user_recipes);
+        });
+    });
+    $(".js-sort-recipes").on("click", function() {
+        $.get("/allrecipes.json", function(data) {
+            data.sort(function(a, b) {
+                var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+            let sorted_recipes_list = "";
+            data.forEach(function(recipe) {
+                sorted_recipes_list += '<li>' + recipe.name + '</li><br />';
+            })
+            $("#show-user-recipes").html(sorted_recipes_list);
         });
     });
 });

@@ -62,6 +62,11 @@ class RecipesController < ApplicationController
         @recipes = Recipe.fastest
     end
 
+    def allrecipes
+        @recipes = Recipe.all
+        render json: @recipes
+    end
+
     private
 
         def check_user
